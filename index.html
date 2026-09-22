@@ -339,10 +339,8 @@
         </header>
         <div class="toolbar">
             <div class="date-wrap"><label>Date</label><input id="date" type="date"></div><button class="btn secondary"
-                onclick="move(-1)">← Previous</button><button class="btn secondary"
-                onclick="goToday()">Today</button><button class="btn secondary" onclick="move(1)">Next →</button><button
-                class="btn primary" onclick="saveDay()">Save / Update</button><button class="btn danger"
-                onclick="deleteDay()">Delete</button>
+                onclick="goToday()">Today</button><button class="btn primary" onclick="saveDay()">Save /
+                Update</button><button class="btn danger" onclick="deleteDay()">Delete</button>
         </div>
         <div id="msg" class="message"></div>
         <div class="grid">
@@ -392,7 +390,7 @@
                 </table>
             </div>
         </div>
-        <footer>🌻🌙 Your little shared universe. MongoDB + Node.js + Vercel.</footer>
+        <footer>🌻🌙 Your little shared Healthy universe.</footer>
     </div>
     <script>
         const today = () => new Date().toISOString().slice(0, 10), $ = id => document.getElementById(id);
