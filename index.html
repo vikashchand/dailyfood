@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Manya 🌻 × Vikash 🌙</title>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        :root {
+            --bg: #fff8fb;
+            --card: #fff;
+            --text: #302731;
+            --muted: #81737e;
+            --pink: #ef79a8;
+            --border: #eadfe7;
+            --red: #d95e69;
+            --green: #5aa97f
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+            color: var(--text);
+            background: radial-gradient(circle at 0 0, #ffe7f1, transparent 30%), radial-gradient(circle at 100% 0, #fff0c5, transparent 28%), var(--bg)
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 24px));
+            margin: auto
+        }
+
+        header {
+            padding: 22px 0 15px
+        }
+
+        .hero,
+        .card,
+        .toolbar {
+            background: rgba(255, 255, 255, .94);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            box-shadow: 0 10px 30px #64415f14
+        }
+
+        .hero {
+            padding: 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .hero h1 {
+            margin: 0 0 5px;
+            font-size: clamp(26px, 5vw, 40px)
+        }
+
+        .hero p {
+            margin: 0;
+            color: var(--muted)
+        }
+
+        .hero-art {
+            font-size: 48px
+        }
+
+        .toolbar {
+            padding: 12px;
+            display: flex;
+            gap: 9px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 15px
+        }
+
+        .date-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 230px
+        }
+
+        .date-wrap label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--muted)
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 10px 11px;
+            background: white;
+            color: var(--text);
+            font: inherit;
+            outline: none
+        }
+
+        textarea {
+            min-height: 70px;
+            resize: vertical
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--pink);
+            box-shadow: 0 0 0 3px #ef79a81f
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 11px;
+            padding: 10px 13px;
+            font-weight: 750
+        }
+
+        .primary {
+            background: var(--pink);
+            color: #fff
+        }
+
+        .secondary {
+            background: #f4edf3
+        }
+
+        .danger {
+            background: #fff0f0;
+            color: var(--red)
+        }
+
+        .green {
+            background: #eaf7ef;
+            color: #286d4a
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px
+        }
+
+        .card {
+            padding: 18px
+        }
+
+        .person {
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .person h2 {
+            margin: 0
+        }
+
+        .person span {
+            font-size: 28px
+        }
+
+        .section {
+            margin-top: 16px
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 7px
+        }
+
+        .section-title h3 {
+            font-size: 14px;
+            margin: 0
+        }
+
+        .hint {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .water,
+        .rating {
+            display: grid;
+            grid-template-columns: 1fr 120px;
+            gap: 8px
+        }
+
+        .range {
+            margin-top: 16px
+        }
+
+        .range-grid,
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px
+        }
+
+        .stats {
+            grid-template-columns: repeat(3, 1fr);
+            margin-top: 12px
+        }
+
+        .stat {
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 14px
+        }
+
+        .stat .label {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .stat .value {
+            font-size: 24px;
+            font-weight: 800;
+            margin-top: 4px
+        }
+
+        .history {
+            margin-top: 15px;
+            overflow: auto;
+            border: 1px solid var(--border);
+            border-radius: 14px
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #eee6ec;
+            text-align: left;
+            font-size: 12px;
+            vertical-align: top
+        }
+
+        th {
+            color: var(--muted);
+            background: #fff8fb
+        }
+
+        .actions {
+            display: flex;
+            gap: 5px
+        }
+
+        .actions button {
+            padding: 6px 8px;
+            font-size: 11px
+        }
+
+        .message {
+            display: none;
+            margin: 10px 0;
+            padding: 10px 12px;
+            border-radius: 11px;
+            font-size: 13px
+        }
+
+        .message.show {
+            display: block
+        }
+
+        .ok {
+            background: #eaf8ef;
+            color: #286d4a
+        }
+
+        .err {
+            background: #fff0f0;
+            color: #9d3e49
+        }
+
+        footer {
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+            padding: 25px 0 40px
+        }
+
+        @media(max-width:800px) {
+            .grid {
+                grid-template-columns: 1fr
+            }
+
+            .hero-art {
+                font-size: 35px
+            }
+        }
+
+        @media(max-width:520px) {
+            .container {
+                width: calc(100% - 14px)
+            }
+
+            .hero-art {
+                display: none
+            }
+
+            .range-grid,
+            .stats,
+            .water,
+            .rating {
+                grid-template-columns: 1fr
+            }
+
+            .date-wrap {
+                min-width: 100%
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="hero">
+                <div>
+                    <h1>Manya 🌻 × Vikash 🌙</h1>
+                    <p>Daily food, water, rating & notes tracker.</p>
+                </div>
+                <div class="hero-art">🌻 ✨ 🌙</div>
+            </div>
+        </header>
+        <div class="toolbar">
+            <div class="date-wrap"><label>Date</label><input id="date" type="date"></div><button class="btn secondary"
+                onclick="move(-1)">← Previous</button><button class="btn secondary"
+                onclick="goToday()">Today</button><button class="btn secondary" onclick="move(1)">Next →</button><button
+                class="btn primary" onclick="saveDay()">Save / Update</button><button class="btn danger"
+                onclick="deleteDay()">Delete</button>
+        </div>
+        <div id="msg" class="message"></div>
+        <div class="grid">
+            <div class="card" id="manyaCard"></div>
+            <div class="card" id="vikashCard"></div>
+        </div>
+        <div class="card range">
+            <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
+                <div>
+                    <h2 style="margin:0 0 3px">History & averages 📊</h2><span class="hint">View any saved date
+                        range.</span>
+                </div><button class="btn green" onclick="pdf()">Export PDF</button>
+            </div>
+            <div class="range-grid" style="margin-top:12px">
+                <div><span class="hint">From</span><input id="from" type="date"></div>
+                <div><span class="hint">To</span><input id="to" type="date"></div>
+            </div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="label">Manya average</div>
+                    <div class="value" id="am">—</div>
+                </div>
+                <div class="stat">
+                    <div class="label">Vikash average</div>
+                    <div class="value" id="av">—</div>
+                </div>
+                <div class="stat">
+                    <div class="label">Combined average</div>
+                    <div class="value" id="ac">—</div>
+                </div>
+            </div>
+            <div class="history">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Manya food</th>
+                            <th>Water</th>
+                            <th>Rating</th>
+                            <th>Vikash food</th>
+                            <th>Water</th>
+                            <th>Rating</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyBody"></tbody>
+                </table>
+            </div>
+        </div>
+        <footer>🌻🌙 Your little shared universe. MongoDB + Node.js + Vercel.</footer>
+    </div>
+    <script>
+        const today = () => new Date().toISOString().slice(0, 10), $ = id => document.getElementById(id);
+        function personHTML(key, name, emoji) {
+            return `<div class="person"><h2>${name} ${emoji}</h2><span>${emoji}</span></div>
+${field(key, 'Breakfast', 'breakfast', 'Food / quantity')}${field(key, 'Morning snacks', 'morningSnacks')}${field(key, 'Lunch', 'lunch')}${field(key, 'Evening snacks', 'eveningSnacks')}${field(key, 'Dinner', 'dinner')}${field(key, 'Fruit of the day 🍎', 'fruit', '')}
+<div class="section"><div class="section-title"><h3>Water 💧</h3><span class="hint">Amount + unit</span></div><div class="water"><input id="${key}-waterAmount" type="number" min="0" step=".1" placeholder="e.g. 2.5"><select id="${key}-waterUnit"><option value="litres">Litres</option><option value="glasses">Glasses</option></select></div></div>
+<div class="section"><div class="section-title"><h3>Rating ⭐</h3><span class="hint">0–10</span></div><div class="rating"><input id="${key}-rating" type="range" min="0" max="10" step=".5" value="0" oninput="$('${key}-ratingNum').value=this.value"><input id="${key}-ratingNum" type="number" min="0" max="10" step=".5" value="0" oninput="$('${key}-rating').value=this.value"></div></div>
+${field(key, 'Note of the day 📝', 'note', 'How was the day?')}`
+        };
+        function field(k, title, f, hint = '') { let tag = f === 'fruit' ? 'input' : 'textarea'; return `<div class="section"><div class="section-title"><h3>${title}</h3>${hint ? `<span class="hint">${hint}</span>` : ''}</div><${tag} id="${k}-${f}" placeholder="${hint || 'Add here...'}"></${tag}>` };
+        $('manyaCard').innerHTML = personHTML('manya', 'Manya', '🌻'); $('vikashCard').innerHTML = personHTML('vikash', 'Vikash', '🌙');
+        const fields = ['breakfast', 'morningSnacks', 'lunch', 'eveningSnacks', 'dinner', 'fruit', 'note'];
+        function getPerson(k) { let p = {}; fields.forEach(f => p[f] = $(`${k}-${f}`).value.trim()); p.waterAmount = Number($(`${k}-waterAmount`).value || 0); p.waterUnit = $(`${k}-waterUnit`).value; p.rating = Number($(`${k}-ratingNum`).value || 0); return p }
+        function setPerson(k, p = {}) { fields.forEach(f => $(`${k}-${f}`).value = p[f] || ''); $(`${k}-waterAmount`).value = p.waterAmount ?? ''; $(`${k}-waterUnit`).value = p.waterUnit || 'litres'; $(`${k}-rating`).value = p.rating ?? 0; $(`${k}-ratingNum`).value = p.rating ?? 0 }
+        function clear() { setPerson('manya'); setPerson('vikash') }
+        async function api(url, opt = {}) { let r = await fetch(url, { ...opt, headers: { 'Content-Type': 'application/json', ...(opt.headers || {}) } }); let d = await r.json().catch(() => ({})); if (!r.ok) throw Error(d.error || `HTTP ${r.status}`); return d }
+        function msg(t, err = false) { $('msg').textContent = t; $('msg').className = 'message show ' + (err ? 'err' : 'ok'); clearTimeout(window.mt); window.mt = setTimeout(() => $('msg').className = 'message', 3000) }
+        async function load(date) { $('date').value = date; try { let d = await api('/api/days/' + date); if (d.exists) { setPerson('manya', d.record.manya); setPerson('vikash', d.record.vikash); msg('Loaded ' + date) } else { clear(); msg('No record for ' + date + ' — add one.') } } catch (e) { msg(e.message, true) } }
+        async function saveDay() { let date = $('date').value; try { await api('/api/days/' + date, { method: 'PUT', body: JSON.stringify({ date, manya: getPerson('manya'), vikash: getPerson('vikash') }) }); msg('Saved successfully 🌻🌙'); history() } catch (e) { msg(e.message, true) } }
+        async function deleteDay() { let date = $('date').value; if (!confirm('Delete the complete record for ' + date + '?')) return; try { await api('/api/days/' + date, { method: 'DELETE' }); clear(); msg('Deleted ' + date); history() } catch (e) { msg(e.message, true) } }
+        function move(n) { let d = new Date($('date').value + 'T00:00:00'); d.setDate(d.getDate() + n); load(d.toISOString().slice(0, 10)) } function goToday() { load(today()) }
+        function avg(a) { a = a.filter(Number.isFinite); return a.length ? (a.reduce((x, y) => x + y, 0) / a.length).toFixed(1) : '—' } function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c])) } function food(p) { return [p.breakfast, p.morningSnacks, p.lunch, p.eveningSnacks, p.dinner, p.fruit].filter(Boolean).join(' • ') || '—' } function water(p) { return p.waterAmount ? `${p.waterAmount} ${p.waterUnit || ''}` : '—' }
+        async function history() { let f = $('from').value, t = $('to').value; if (!f || !t) return; try { let d = await api(`/api/days?from=${f}&to=${t}`), r = d.records || []; $('am').textContent = avg(r.map(x => Number(x.manya?.rating))); $('av').textContent = avg(r.map(x => Number(x.vikash?.rating))); $('ac').textContent = avg(r.flatMap(x => [Number(x.manya?.rating), Number(x.vikash?.rating)])); $('historyBody').innerHTML = r.length ? r.map(x => `<tr><td>${x.date}</td><td>${esc(food(x.manya))}</td><td>${esc(water(x.manya))}</td><td>${Number(x.manya?.rating || 0).toFixed(1)}/10</td><td>${esc(food(x.vikash))}</td><td>${esc(water(x.vikash))}</td><td>${Number(x.vikash?.rating || 0).toFixed(1)}/10</td><td class="actions"><button class="btn secondary" onclick="load('${x.date}')">Edit</button><button class="btn danger" onclick="del('${x.date}')">Delete</button></td></tr>`).join('') : `<tr><td colspan="8">No saved days.</td></tr>` } catch (e) { msg(e.message, true) } }
+        async function del(d) { if (!confirm('Delete ' + d + '?')) return; try { await api('/api/days/' + d, { method: 'DELETE' }); if ($('date').value === d) clear(); history(); msg('Deleted ' + d) } catch (e) { msg(e.message, true) } }
+        async function pdf() { try { let d = await api(`/api/days?from=${$('from').value}&to=${$('to').value}`), r = d.records || []; if (!r.length) return msg('No records to export', true); let { jsPDF } = window.jspdf, doc = new jsPDF(); doc.setFontSize(17); doc.text('Manya x Vikash - Lifestyle Report', 14, 18); doc.setFontSize(9); doc.text(`Period: ${$('from').value} to ${$('to').value}`, 14, 25); doc.text(`Manya avg: ${avg(r.map(x => Number(x.manya?.rating)))} / 10`, 14, 32); doc.text(`Vikash avg: ${avg(r.map(x => Number(x.vikash?.rating)))} / 10`, 70, 32); doc.text(`Combined: ${avg(r.flatMap(x => [Number(x.manya?.rating), Number(x.vikash?.rating)]))} / 10`, 130, 32); doc.autoTable({ startY: 40, head: [['Date', 'Manya food', 'Manya water', 'Manya rating', 'Vikash food', 'Vikash water', 'Vikash rating']], body: r.map(x => [x.date, food(x.manya), water(x.manya), `${Number(x.manya?.rating || 0).toFixed(1)}/10`, food(x.vikash), water(x.vikash), `${Number(x.vikash?.rating || 0).toFixed(1)}/10`]), styles: { fontSize: 7 }, headStyles: { fillColor: [239, 121, 168] } }); doc.save(`manya-vikash-${$('from').value}-to-${$('to').value}.pdf`) } catch (e) { msg(e.message, true) } }
+        let t = today(); $('date').value = t; $('from').value = new Date(Date.now() - 6 * 86400000).toISOString().slice(0, 10); $('to').value = t; $('date').onchange = e => load(e.target.value); $('from').onchange = history; $('to').onchange = history; load(t); history();
+    </script>
+</body>
+
+</html>

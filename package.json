@@ -1,0 +1,15 @@
+{
+  "name": "manya-vikash-lifestyle",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "mongodb": "^6.19.0"
+  },
+  "devDependencies": {
+    "vercel": "^48.0.0"
+  }
+}
